@@ -25,4 +25,6 @@ This is the same as RaZMandelbrot but 64bit and MPFR implemented for deep zooms
 | <b>V-</b> | Make Video Frames(Take a Screenshot on each zoom frame) |
 | <b>~-</b> | Use MPFR |
 | <b>F1-</b> | Auto Zoom In |
+| <b>F2-</b> | Auto Iterations |
+| <b>F3-</b> | Reset Y Offset |
 | <b>I-</b> | Show Controls |

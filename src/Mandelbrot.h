@@ -32,9 +32,13 @@ double zmx2 = 2;
 double zmy1 = WIN_HEIGHT / 4;
 double zmy2 = 2;
 double zmAmount = 1.1;
+mpfr_t offsetX_T,offsetY_T,zmx1_T,zmx2_T,zmy1_T,zmy2_T, zmAmount_T, bail_T, t1_T;
+
 bool zoomIn = false;
 bool zoomOut = false;
+bool autoZoomIn = false;
 int maxiterations = 128;
+bool autoIterations = false;
 
 const double escapeRadius = 4.0;
 const double eps = 0.001;
@@ -54,6 +58,7 @@ sf::Image image;	// To store image for From Image Color Method
 int mpfrPrecision = 100;
 
 void InitVertexArray();
+void InitMPFR();
 void CalculateFractal(uint start, uint end);
 void CalculateFractalMPFR(uint start, uint end);
 void CreateFractalThreads();
@@ -75,6 +80,28 @@ void InitVertexArray()
 	// Load an image file from a file
 	if (!image.loadFromFile("content/image.jpg"))
     	std::cout << "image.jpg NOT FOUND";
+}
+void InitMPFR()
+{
+	mpfr_init2(offsetX_T, mpfrPrecision);
+	mpfr_init2(offsetY_T, mpfrPrecision);
+	mpfr_init2(zmx1_T, mpfrPrecision);
+	mpfr_init2(zmx2_T, mpfrPrecision);
+	mpfr_init2(zmy1_T, mpfrPrecision);
+	mpfr_init2(zmy2_T, mpfrPrecision);
+	mpfr_init2(zmAmount_T, mpfrPrecision);
+	mpfr_init2(t1_T, mpfrPrecision);
+	mpfr_init2(bail_T, mpfrPrecision);
+
+	mpfr_set_d(offsetX_T, offsetX, GMP_RNDN);
+	mpfr_set_d(offsetY_T, offsetY, GMP_RNDN);
+	mpfr_set_d(zmx1_T, zmx1, GMP_RNDN);
+	mpfr_set_d(zmx2_T, zmx2, GMP_RNDN);
+	mpfr_set_d(zmy1_T, zmy1, GMP_RNDN);
+	mpfr_set_d(zmy2_T, zmy2, GMP_RNDN);
+	mpfr_set_d(zmAmount_T, zmAmount, GMP_RNDN);
+	mpfr_set_d(t1_T, 0.0, GMP_RNDN);
+	mpfr_set_d(bail_T, escapeRadius, GMP_RNDN);
 }
 
 void CalculateFractal(uint start, uint end)
@@ -199,17 +226,10 @@ void CalculateFractal(uint start, uint end)
 }
 void CalculateFractalMPFR(uint start, uint end)
 {
-	mpfr_t a2_M, b2_M, offsetX_M, offsetY_M, zmx1_M, zmx2_M, zmy1_M, zmy2_M,
-			a_M, b_M, aa_M, bb_M, ca_M, cb_M, y_M, x_M, bail_M, abs_M;
+	mpfr_t a2_M, b2_M, a_M, b_M, aa_M, bb_M, ca_M, cb_M, y_M, x_M, abs_M, absold_M, difftolast_M,difftomax_M;
 
 	mpfr_init2(a2_M, mpfrPrecision);
 	mpfr_init2(b2_M, mpfrPrecision);
-	mpfr_init2(offsetX_M, mpfrPrecision);
-	mpfr_init2(offsetY_M, mpfrPrecision);
-	mpfr_init2(zmx1_M, mpfrPrecision);
-	mpfr_init2(zmx2_M, mpfrPrecision);
-	mpfr_init2(zmy1_M, mpfrPrecision);
-	mpfr_init2(zmy2_M, mpfrPrecision);
 	mpfr_init2(a_M, mpfrPrecision);
 	mpfr_init2(b_M, mpfrPrecision);
 	mpfr_init2(aa_M, mpfrPrecision);
@@ -218,18 +238,14 @@ void CalculateFractalMPFR(uint start, uint end)
 	mpfr_init2(cb_M, mpfrPrecision);
 	mpfr_init2(x_M, mpfrPrecision);
 	mpfr_init2(y_M, mpfrPrecision);
-	mpfr_init2(bail_M, mpfrPrecision);
 	mpfr_init2(abs_M, mpfrPrecision);
+	mpfr_init2(absold_M, mpfrPrecision);
+	mpfr_init2(difftolast_M, mpfrPrecision);
+	mpfr_init2(difftomax_M, mpfrPrecision);
 
-	mpfr_set_flt(offsetX_M, offsetX, GMP_RNDN);
-	mpfr_set_flt(offsetY_M, offsetY, GMP_RNDN);
-	mpfr_set_flt(zmx1_M, zmx1, GMP_RNDN);
-	mpfr_set_flt(zmx2_M, zmx2, GMP_RNDN);
-	mpfr_set_flt(zmy1_M, zmy1, GMP_RNDN);
-	mpfr_set_flt(zmy2_M, zmy2, GMP_RNDN);
+	mpfr_set_d(absold_M, 0.0, GMP_RNDN);
 
-	mpfr_set_si(bail_M, escapeRadius, GMP_RNDN);
-
+	double convergeNumber = maxiterations; 	// Changes if the while loop breaks due to non-convergence
 	// Store colortimer value to animate color methods
 	float colortime = 0.f;
 	if(animated)
@@ -237,20 +253,20 @@ void CalculateFractalMPFR(uint start, uint end)
 
 	for (uint y = 0; y < WIN_HEIGHT; y++)
 	{
-		mpfr_set_flt(y_M, y, GMP_RNDZ);
+		mpfr_set_flt(y_M, y, GMP_RNDN);
 		for (uint x = start; x < end; x++)
 		{
-			mpfr_set_flt(x_M, x, GMP_RNDZ);
+			mpfr_set_flt(x_M, x, GMP_RNDN);
 
 			//double a = (x + offsetX) / zmx1 - zmx2; // X with Pan and Zoom;
-			mpfr_add(a_M, x_M, offsetX_M, GMP_RNDN);
-			mpfr_div(a_M, a_M,zmx1_M, GMP_RNDN);
-			mpfr_sub(a_M, a_M, zmx2_M, GMP_RNDN);
+			mpfr_add(a_M, x_M, offsetX_T, GMP_RNDN);
+			mpfr_div(a_M, a_M,zmx1_T, GMP_RNDN);
+			mpfr_sub(a_M, a_M, zmx2_T, GMP_RNDN);
 
 			//double b = zmy2 - (y + offsetY) / zmy1; // Y with Pan and Zoom;
-			mpfr_add(b_M, y_M, offsetY_M, GMP_RNDN);
-			mpfr_div(b_M, b_M, zmy1_M, GMP_RNDN);
-			mpfr_sub(b_M, zmy2_M, b_M, GMP_RNDN);
+			mpfr_add(b_M, y_M, offsetY_T, GMP_RNDN);
+			mpfr_div(b_M, b_M, zmy1_T, GMP_RNDN);
+			mpfr_sub(b_M, zmy2_T, b_M, GMP_RNDN);
 
 			//double ca = a;							// Store Constant a and b
 			mpfr_set(ca_M, a_M, GMP_RNDN);
@@ -275,6 +291,8 @@ void CalculateFractalMPFR(uint start, uint end)
 
 				//double abs = sqrt(a * a + b * b);
 				mpfr_add(abs_M, a2_M, b2_M, GMP_RNDN);
+				mpfr_sqrt(abs_M, abs_M, GMP_RNDN);
+				//double abs = sqrt(mpfr_get_d(abs_M, GMP_RNDU));
 
 				//a = aa + ca;
 				mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
@@ -282,16 +300,19 @@ void CalculateFractalMPFR(uint start, uint end)
 				mpfr_add(b_M, bb_M, cb_M, GMP_RNDN);
 
 				// Outside of set
-				if (mpfr_greater_p(abs_M,bail_M))
+				if (mpfr_greater_p(abs_M,bail_T))
 				{
 					// Measure how much we exceeded the maximum
 					//double diffToLast = abs - absOld;
+					mpfr_sub(difftolast_M, abs_M,absold_M, GMP_RNDN);
+
 					//double diffToMax = 4.0 - absOld;
-					//convergeNumber = n + diffToMax / diffToLast;
+					mpfr_d_sub(difftomax_M, 4.0, absold_M, GMP_RNDN);
+					convergeNumber = n + mpfr_get_d(difftomax_M,GMP_RNDN) / mpfr_get_d(difftolast_M,GMP_RNDN);
 					break;
 				}
-
 				n++;
+				mpfr_set(absold_M,abs_M,GMP_RNDN);
 			}
 
 			// We color each pixel based on how long it takes to get to infinity
@@ -306,7 +327,7 @@ void CalculateFractalMPFR(uint start, uint end)
 			else
 			{
 				// Map convergence to smooth brightness
-				double brightness = ReMap(n, 0, maxiterations, 0, 1);
+				double brightness = ReMap(convergeNumber, 0, maxiterations, 0, 1);
 				brightness = ReMap(sqrt(brightness), 0, 1, 0, 255);
 				//double smooth = (n + 2 - log(log(absOld))/log(2.0));
 				//double smooth = n+2 - log(log(z.real()*z.real()+z.imag()*z.imag()))/log(2.0);
@@ -350,12 +371,6 @@ void CalculateFractalMPFR(uint start, uint end)
 	}
 	mpfr_clear(a2_M);
 	mpfr_clear(b2_M);
-	mpfr_clear(offsetX_M);
-	mpfr_clear(offsetY_M);
-	mpfr_clear(zmx1_M);
-	mpfr_clear(zmx2_M);
-	mpfr_clear(zmy1_M);
-	mpfr_clear(zmy2_M);
 	mpfr_clear(a_M);
 	mpfr_clear(b_M);
 	mpfr_clear(aa_M);
@@ -364,7 +379,6 @@ void CalculateFractalMPFR(uint start, uint end)
 	mpfr_clear(cb_M);
 	mpfr_clear(x_M);
 	mpfr_clear(y_M);
-	mpfr_clear(bail_M);
 	mpfr_clear(abs_M);
 }
 
@@ -401,19 +415,46 @@ void ResetView()
 	zoomOut = false;
 	colortimer.restart();
 	maxiterations=256;
+
+	mpfr_set_d(offsetX_T, offsetX, GMP_RNDN);
+	mpfr_set_d(offsetY_T, offsetY, GMP_RNDN);
+	mpfr_set_d(zmx1_T, zmx1, GMP_RNDN);
+	mpfr_set_d(zmx2_T, zmx2, GMP_RNDN);
+	mpfr_set_d(zmy1_T, zmy1, GMP_RNDN);
+	mpfr_set_d(zmy2_T, zmy2, GMP_RNDN);
+	mpfr_set_d(zmAmount_T, zmAmount, GMP_RNDN);
+	mpfr_set_d(t1_T, 0.0, GMP_RNDN);
 }
 
 void ZoomIn(sf::Window& window)
 {
-	mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
-	offsetX = offsetX + ((double)mousePos.x - (WIN_WIDTH / 2)) * 0.1;
-	offsetY = offsetY + ((double)mousePos.y - (WIN_HEIGHT / 2)) * 0.1;
+	if(!autoZoomIn){
+		mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
+		double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
+		double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;
+		offsetX = offsetX + mouseX_D;
+		mpfr_add_d(offsetX_T, offsetX_T, mouseX_D, GMP_RNDN);
+		offsetY = offsetY + mouseY_D;
+		mpfr_add_d(offsetY_T, offsetY_T, mouseY_D, GMP_RNDN);
+	}
 	zmx1 = zmx1 * zmAmount;
-	zmx2 = zmx2 * (1 / zmAmount);
+	mpfr_mul(zmx1_T, zmx1_T, zmAmount_T, GMP_RNDN);
+
+	zmx2 = zmx2 * (1.0 / zmAmount);
+	mpfr_d_div(t1_T, 1.0, zmAmount_T, GMP_RNDN);
+	mpfr_mul(zmx2_T, zmx2_T, t1_T, GMP_RNDN);
+
 	zmy1 = zmy1 * zmAmount;
-	zmy2 = zmy2 * (1 / zmAmount);
+	mpfr_mul(zmy1_T, zmy1_T, zmAmount_T, GMP_RNDN);
+
+	zmy2 = zmy2 * (1.0 / zmAmount);
+	mpfr_mul(zmy2_T, zmy2_T, t1_T, GMP_RNDN);
+
 	offsetX = offsetX * zmAmount;
+	mpfr_mul(offsetX_T, offsetX_T, zmAmount_T, GMP_RNDN);
+
 	offsetY = offsetY * zmAmount;
+	mpfr_mul(offsetY_T, offsetY_T, zmAmount_T, GMP_RNDN);
 	if (makeVideoFrames)
 		TakeScreenshot(window);
 }
@@ -421,12 +462,28 @@ void ZoomIn(sf::Window& window)
 void ZoomOut(sf::Window& window)
 {
 	mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
-	offsetX = offsetX + ((double)mousePos.x - (WIN_WIDTH / 2)) * 0.1;
-	offsetY = offsetY + ((double)mousePos.y - (WIN_HEIGHT / 2)) * 0.1;
+	double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
+	double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;
+	offsetX = offsetX + mouseX_D;
+	mpfr_add_d(offsetX_T, offsetX_T, mouseX_D, GMP_RNDN);
+	offsetY = offsetY + mouseY_D;
+	mpfr_add_d(offsetY_T, offsetY_T, mouseY_D, GMP_RNDN);
+
 	zmx1 = zmx1 / zmAmount;
-	zmx2 = zmx2 / (1 / zmAmount);
+	mpfr_div(zmx1_T, zmx1_T, zmAmount_T, GMP_RNDN);
+
+	zmx2 = zmx2 / (1.0 / zmAmount);
+	mpfr_d_div(t1_T, 1.0, zmAmount_T, GMP_RNDN);
+	mpfr_div(zmx2_T, zmx2_T, t1_T, GMP_RNDN);
+
 	zmy1 = zmy1 / zmAmount;
-	zmy2 = zmy2 / (1 / zmAmount);
+	mpfr_div(zmy1_T, zmy1_T, zmAmount_T, GMP_RNDN);
+
+	zmy2 = zmy2 / (1.0 / zmAmount);
+	mpfr_div(zmy2_T, zmy2_T, t1_T, GMP_RNDN);
+
 	offsetX = offsetX / zmAmount;
+	mpfr_div(offsetX_T, offsetX_T, zmAmount_T, GMP_RNDN);
 	offsetY = offsetY / zmAmount;
+	mpfr_div(offsetY_T, offsetY_T, zmAmount_T, GMP_RNDN);
 }

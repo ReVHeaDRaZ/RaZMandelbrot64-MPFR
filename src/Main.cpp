@@ -71,6 +71,7 @@ int main(int argc, char* argv[])
 
 	InitHud();
 	InitVertexArray();
+	InitMPFR();
 	CreatePalettes();
 	ResetView();
 
@@ -213,9 +214,16 @@ int main(int argc, char* argv[])
 				}
 				if (event.key.code == sf::Keyboard::Key::Tilde)
 					useMPFR = !useMPFR;
-				if (event.key.code == sf::Keyboard::Key::F1)
+				if (event.key.code == sf::Keyboard::Key::F1){
 					zoomIn = !zoomIn;
-
+					autoZoomIn = !autoZoomIn;
+				}
+				if (event.key.code == sf::Keyboard::Key::F2)
+					autoIterations = !autoIterations;
+				if (event.key.code == sf::Keyboard::Key::F3){
+					offsetY = 0.0;
+					mpfr_set_d(offsetY_T, 0.0, GMP_RNDN);
+				}
 			}
 			// Mouse Pressed
 			if (event.type == sf::Event::MouseButtonPressed)
@@ -240,14 +248,18 @@ int main(int argc, char* argv[])
 
 		if (zoomIn && !zoomOut){
 			ZoomIn(window);
-			maxiterations+=8;
-			currentIterations.setString(to_string(maxiterations));
+			if(autoIterations){
+				maxiterations+=2;
+				currentIterations.setString(to_string(maxiterations));
+			}
 		}
 		if (zoomOut && !zoomIn){
 			ZoomOut(window);
-			maxiterations-=8;
-			if(maxiterations<8) maxiterations=8;
-			currentIterations.setString(to_string(maxiterations));
+			if(autoIterations){
+				maxiterations-=2;
+				if(maxiterations<8) maxiterations=8;
+				currentIterations.setString(to_string(maxiterations));
+			}
 		}
 
 		// Draw
