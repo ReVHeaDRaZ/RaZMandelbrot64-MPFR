@@ -224,6 +224,15 @@ int main(int argc, char* argv[])
 					offsetY = 0.0;
 					mpfr_set_d(offsetY_T, 0.0, GMP_RNDN);
 				}
+				if (event.key.code == sf::Keyboard::Key::F11){
+					mpfrPrecision = mpfrPrecision - 32;
+					if(mpfrPrecision < 128) mpfrPrecision = 128;
+					SetMPFRPrecision();
+				}
+				if (event.key.code == sf::Keyboard::Key::F12){
+					mpfrPrecision = mpfrPrecision + 32;
+					SetMPFRPrecision();
+				}
 			}
 			// Mouse Pressed
 			if (event.type == sf::Event::MouseButtonPressed)

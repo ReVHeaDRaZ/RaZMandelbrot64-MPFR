@@ -55,10 +55,11 @@ bool normalMap = false;
 
 sf::Image image;	// To store image for From Image Color Method
 
-int mpfrPrecision = 100;
+int mpfrPrecision = 128;
 
 void InitVertexArray();
 void InitMPFR();
+void SetMPFRPrecision();
 void CalculateFractal(uint start, uint end);
 void CalculateFractalMPFR(uint start, uint end);
 void CreateFractalThreads();
@@ -102,6 +103,18 @@ void InitMPFR()
 	mpfr_set_d(zmAmount_T, zmAmount, GMP_RNDN);
 	mpfr_set_d(t1_T, 0.0, GMP_RNDN);
 	mpfr_set_d(bail_T, escapeRadius, GMP_RNDN);
+}
+
+void SetMPFRPrecision(){
+	mpfr_set_prec(offsetX_T,  	mpfrPrecision);
+	mpfr_set_prec(offsetY_T,  	mpfrPrecision);
+	mpfr_set_prec(zmx1_T, 		mpfrPrecision);
+	mpfr_set_prec(zmx2_T, 		mpfrPrecision);
+	mpfr_set_prec(zmy1_T, 		mpfrPrecision);
+	mpfr_set_prec(zmy2_T, 		mpfrPrecision);
+	mpfr_set_prec(zmAmount_T,	mpfrPrecision);
+	mpfr_set_prec(t1_T, 		mpfrPrecision);
+	mpfr_set_prec(bail_T, 		mpfrPrecision);
 }
 
 void CalculateFractal(uint start, uint end)
