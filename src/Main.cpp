@@ -212,8 +212,10 @@ int main(int argc, char* argv[])
 					if(angle>360.0) angle=0.0;
 					v = exp(complexi*angle*2.0*doublepi/360.0);
 				}
-				if (event.key.code == sf::Keyboard::Key::Tilde)
+				if (event.key.code == sf::Keyboard::Key::Tilde){
 					useMPFR = !useMPFR;
+					showMPFRHud = !showMPFRHud;
+				}
 				if (event.key.code == sf::Keyboard::Key::F1){
 					zoomIn = !zoomIn;
 					autoZoomIn = !autoZoomIn;
@@ -225,13 +227,15 @@ int main(int argc, char* argv[])
 					mpfr_set_d(offsetY_T, 0.0, GMP_RNDN);
 				}
 				if (event.key.code == sf::Keyboard::Key::F11){
-					mpfrPrecision = mpfrPrecision - 32;
-					if(mpfrPrecision < 128) mpfrPrecision = 128;
+					mpfrPrecision = mpfrPrecision - 16;
+					if(mpfrPrecision < 80) mpfrPrecision = 80;
 					SetMPFRPrecision();
+					hudMpfr.setString(to_string(mpfrPrecision));
 				}
 				if (event.key.code == sf::Keyboard::Key::F12){
-					mpfrPrecision = mpfrPrecision + 32;
+					mpfrPrecision = mpfrPrecision + 16;
 					SetMPFRPrecision();
+					hudMpfr.setString(to_string(mpfrPrecision));
 				}
 			}
 			// Mouse Pressed

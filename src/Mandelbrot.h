@@ -55,7 +55,7 @@ bool normalMap = false;
 
 sf::Image image;	// To store image for From Image Color Method
 
-int mpfrPrecision = 128;
+int mpfrPrecision = 80;
 
 void InitVertexArray();
 void InitMPFR();
@@ -106,15 +106,46 @@ void InitMPFR()
 }
 
 void SetMPFRPrecision(){
+	mpfr_t temp;
+	mpfr_init2(temp, mpfrPrecision);
+
+	mpfr_set(temp, offsetX_T, GMP_RNDN);
 	mpfr_set_prec(offsetX_T,  	mpfrPrecision);
+	mpfr_set(offsetX_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, offsetY_T, GMP_RNDN);
 	mpfr_set_prec(offsetY_T,  	mpfrPrecision);
+	mpfr_set(offsetY_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, zmx1_T, GMP_RNDN);
 	mpfr_set_prec(zmx1_T, 		mpfrPrecision);
+	mpfr_set(zmx1_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, zmx2_T, GMP_RNDN);
 	mpfr_set_prec(zmx2_T, 		mpfrPrecision);
+	mpfr_set(zmx2_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, zmy1_T, GMP_RNDN);
 	mpfr_set_prec(zmy1_T, 		mpfrPrecision);
+	mpfr_set(zmy1_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, zmy2_T, GMP_RNDN);
 	mpfr_set_prec(zmy2_T, 		mpfrPrecision);
+	mpfr_set(zmy2_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, zmAmount_T, GMP_RNDN);
 	mpfr_set_prec(zmAmount_T,	mpfrPrecision);
+	mpfr_set(zmAmount_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, t1_T, GMP_RNDN);
 	mpfr_set_prec(t1_T, 		mpfrPrecision);
+	mpfr_set(t1_T, temp, GMP_RNDN);
+
+	mpfr_set(temp, bail_T, GMP_RNDN);
 	mpfr_set_prec(bail_T, 		mpfrPrecision);
+	mpfr_set(bail_T, temp, GMP_RNDN);
+
+	mpfr_clear(temp);
 }
 
 void CalculateFractal(uint start, uint end)
@@ -428,6 +459,7 @@ void ResetView()
 	zoomOut = false;
 	colortimer.restart();
 	maxiterations=256;
+	currentIterations.setString(to_string(maxiterations));
 
 	mpfr_set_d(offsetX_T, offsetX, GMP_RNDN);
 	mpfr_set_d(offsetY_T, offsetY, GMP_RNDN);

@@ -1,10 +1,11 @@
 #pragma once
 
-sf::Text heading, currentIterations, hudFrames, colorMeth, controls, instructions1, instructions2;
+sf::Text heading, currentIterations, hudFrames, colorMeth, controls, instructions1, instructions2, mpfrHeading, hudMpfr;
 sf::Font font;
 float frames;	  // To store FramesPerSecond
 int hudCount = 0; // To count loops for hud
 bool showControls = false;
+bool showMPFRHud = false;
 
 template <typename T>
 //function to convert a non-string variable to a string.
@@ -29,6 +30,8 @@ void InitHud()
 	hudFrames = currentIterations;
 	colorMeth = currentIterations;
 	controls = currentIterations;
+	mpfrHeading = currentIterations;
+	hudMpfr = currentIterations;
 	instructions1 = currentIterations;
 	instructions1.setCharacterSize(15);
 	instructions2 = instructions1;
@@ -39,6 +42,10 @@ void InitHud()
 	hudFrames.setString("0");
 	colorMeth.setString("SINGLE");
 	colorMeth.setPosition(80,41);
+	mpfrHeading.setPosition(5,61);
+	mpfrHeading.setString("MPFR PRECISION-");
+	hudMpfr.setPosition(80,61);
+	hudMpfr.setString("80");
 	controls.setString("PRESS I TO SHOW CONTROLS");
 	controls.setPosition(5,WIN_HEIGHT-15);
 
@@ -63,6 +70,10 @@ void DrawHud(sf::RenderWindow* win)
 	win->draw(hudFrames);
 	win->draw(colorMeth);
 	win->draw(controls);
+	if(showMPFRHud){
+		win->draw(mpfrHeading);
+		win->draw(hudMpfr);
+	}
 	if(showControls){
 		win->draw(instructions1);
 		win->draw(instructions2);
