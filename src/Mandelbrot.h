@@ -42,7 +42,7 @@ bool autoZoomIn = false;
 int maxiterations = 128;
 bool autoIterations = false;		// Auto increment iterations during zoom
 bool canCalculateFractal = true;	// For only calculating Fractal after a zoom or pan
-
+bool burningShip = false;
 const double escapeRadius = 4.0;
 const double eps = 0.001;
 
@@ -68,6 +68,7 @@ void CreateFractalThreads();
 void ResetView();
 void ZoomIn(sf::Window& window);
 void ZoomOut(sf::Window& window);
+void BurningShipFractal(double& a, double& b, double ca, double cb);
 
 void InitVertexArray()
 {
@@ -150,6 +151,13 @@ void SetMPFRPrecision(){
 	mpfr_clear(temp);
 }
 
+void BurningShipFractal(double& a, double& b, double ca, double cb){
+	double aa = a * a - b * b;
+	double bb = 2 * abs(a * b);
+	a = aa - ca;
+	b = bb - cb;
+}
+
 void CalculateFractal(uint start, uint end)
 {
 	// Store colortimer value to animate color methods
@@ -174,12 +182,15 @@ void CalculateFractal(uint start, uint end)
 
 			while (n < maxiterations)
 			{
-				// z2 + c
-				double aa = a * a - b * b;
-				double bb = 2 * a * b;
 				double abs = sqrt(a * a + b * b);
-				a = aa + ca;
-				b = bb + cb;
+
+				// z2 + c
+				if(!burningShip){
+					double aa = a * a - b * b;
+					double bb = 2 * a * b;
+					a = aa + ca;
+					b = bb + cb;
+				}else BurningShipFractal(a, b, ca, cb);
 
 				// Interior Detection
 				der = der*2.0*z;

@@ -123,26 +123,32 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::Key::R){
 					rAmount -= 0.05f;
 					if(rAmount<0.f) rAmount=0.f;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::T){
 					rAmount += 0.05f;
 					if(rAmount>1.0f) rAmount=1.0f;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::G){
 					gAmount -= 0.05f;
 					if(gAmount<0.f) gAmount=0.f;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::H){
 					gAmount += 0.05f;
 					if(gAmount>1.0f) gAmount=1.0f;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::B){
 					bAmount -= 0.05f;
 					if(bAmount<0.f) bAmount=0.f;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::N){
 					bAmount += 0.05f;
 					if(bAmount>1.0f) bAmount=1.0f;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::Comma)
 				{
@@ -150,6 +156,7 @@ int main(int argc, char* argv[])
 					bhsv.h = interiorHue;
 					brgb = HsvToRgb(bhsv);
 					interiorColor = sf::Color(brgb.r, brgb.g, brgb.b, 255);
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::Period)
 				{
@@ -157,6 +164,7 @@ int main(int argc, char* argv[])
 					bhsv.h = interiorHue;
 					brgb = HsvToRgb(bhsv);
 					interiorColor = sf::Color(brgb.r, brgb.g, brgb.b, 255);
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::S)
 					takeScreenshot = true;
@@ -261,6 +269,10 @@ int main(int argc, char* argv[])
 					mpfrPrecision = mpfrPrecision + 16;
 					SetMPFRPrecision();
 					hudMpfr.setString(to_string(mpfrPrecision));
+				}
+				if (event.key.code == sf::Keyboard::Key::F5){
+					burningShip = !burningShip;
+					canCalculateFractal = true;
 				}
 			}
 			// Mouse Pressed
