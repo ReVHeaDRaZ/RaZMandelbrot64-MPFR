@@ -209,29 +209,36 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::Key::A)
 					animated = !animated;
 				// Normal Map
-				if (event.key.code == sf::Keyboard::Key::X)
+				if (event.key.code == sf::Keyboard::Key::X){
 					normalMap = !normalMap;
+					canCalculateFractal = true;
+				}
 				if (event.key.code == sf::Keyboard::Key::End){
 					lightHeight -= 0.1;
 					if(lightHeight<0.2) lightHeight=0.2;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::Home){
 					lightHeight += 0.1;
 					if(lightHeight>4.0) lightHeight=4.0;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::Insert){
 					angle--;
 					if(angle<0.0) angle=360.0;
 					v = exp(complexi*angle*2.0*doublepi/360.0);
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::Delete){
 					angle++;
 					if(angle>360.0) angle=0.0;
 					v = exp(complexi*angle*2.0*doublepi/360.0);
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::Tilde){
 					useMPFR = !useMPFR;
 					showMPFRHud = !showMPFRHud;
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::F1){
 					zoomIn = !zoomIn;
@@ -242,6 +249,7 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::Key::F3){
 					offsetY = 0.0;
 					mpfr_set_d(offsetY_T, 0.0, GMP_RNDN);
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::F11){
 					mpfrPrecision = mpfrPrecision - 16;

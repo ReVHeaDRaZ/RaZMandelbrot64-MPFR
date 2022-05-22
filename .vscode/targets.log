@@ -4,11 +4,10 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
- 
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sun May 22 16:05:40 2022
+# Make data base, printed on Sun May 22 16:49:16 2022
 
 # Variables
 
@@ -24,6 +23,7 @@ OBJ_SUBDIRS := bin/Release/obj/Platform bin/Release/obj/Platform/MacOS bin/Relea
 color_blue := \033[0;34m
 # makefile (from 'Makefile', line 87)
 SRC_DIR := src
+ 
 # makefile (from 'Makefile', line 22)
 SRC_TARGET = 
 # environment
@@ -80,6 +80,7 @@ define compile_with
 endef
 # makefile (from 'Makefile', line 175)
 _OBJS := Main.cpp.o Platform/MacOS/MacOSPlatform.cpp.o Platform/Unix/LinuxPlatform.cpp.o Platform/Win32/WindowsPlatform.cpp.o
+ 
 # makefile
 CURDIR := /c/Users/Ryan/cppProjects/RaZMandelbrot64-MPFR
 # automatic
@@ -134,6 +135,7 @@ DEP_SUBDIRS := bin/Release/dep/Platform bin/Release/dep/Platform/MacOS bin/Relea
 PLATFORM = linux
 # default
 MAKE_HOST := x86_64-pc-msys
+ 
 # makefile (from 'Makefile', line 176)
 OBJS := bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o
 # makefile (from 'Makefile', line 10)
@@ -212,6 +214,7 @@ PRODUCTION_MACOS_BACKGROUND = dmg-background
 color_purple := \033[0;35m
 # makefile (from 'Makefile', line 230)
 RC_COMPILE = -$(RC) -J rc -O coff --preprocessor-arg=-MT --preprocessor-arg=$@ --preprocessor-arg=-MMD --preprocessor-arg=-MP --preprocessor-arg=-MF --preprocessor-arg=$(DEP_DIR)/$*.rc.Td $(_BUILD_MACROS) $(_INCLUDE_DIRS) -i $< -o $@
+ 
 # makefile (from 'Makefile', line 187)
 _PCH_COMPILER_EXT := gch
 # default
@@ -263,6 +266,7 @@ BLD_DIR := bin/Release
 # makefile (from 'Makefile', line 79)
 BUILD_DEPENDENCIES = 
 # makefile (from 'Makefile', line 181)
+ 
 DEPS := bin/Release/dep/Main.cpp.d bin/Release/dep/Platform/MacOS/MacOSPlatform.cpp.d bin/Release/dep/Platform/Unix/LinuxPlatform.cpp.d bin/Release/dep/Platform/Win32/WindowsPlatform.cpp.d bin/Release/dep/PCH.d
 # makefile (from 'Makefile', line 2)
 SUFFIXES = 
@@ -315,6 +319,7 @@ bin/Release/obj/%.o: src/% bin/Release/obj/PCH.hpp.gch | bin/Release/dep/%.d bin
 #  recipe to execute (from 'Makefile', line 307):
 	$(call compile_with,@,<,$(OBJ_COMPILE),$(POST_COMPILE))
 
+ 
 bin/Release/obj/./%.o: /% bin/Release/obj/PCH.hpp.gch | bin/Release/dep/./%.d bin bin/Release bin/Release/dep bin/Release/dep/Platform bin/Release/dep/Platform/MacOS bin/Release/dep/Platform/Unix bin/Release/dep/Platform/Win32 bin/Release/dep/Utility bin/Release/obj bin/Release/obj/Platform bin/Release/obj/Platform/MacOS bin/Release/obj/Platform/Unix bin/Release/obj/Platform/Win32 bin/Release/obj/Utility
 #  recipe to execute (from 'Makefile', line 310):
 	$(call compile_with,@,<,$(OBJ_COMPILE_T),$(POST_COMPILE_T))
@@ -375,6 +380,7 @@ bin/Release/dep/%.d:
 # Not a target:
 env/linux.all.mk:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-04-25 19:21:17.2817903
 #  File has been updated.
 #  Successfully updated.
@@ -423,6 +429,7 @@ bin/Release/obj/Platform/MacOS:
 	$(if $(_CLEAN),,@printf '\$(color_blue)')
 	$(MKDIR) $@
 
+ 
 src/Utility/FileSystem.hpp:
 #  Implicit rule search has been done.
 #  Last modified 2022-04-25 19:21:17.3007399
@@ -440,7 +447,7 @@ bin/Release/obj/Platform/Unix:
 
 bin/Release/dep:
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-21 22:24:28.105841
+#  Last modified 2022-05-22 16:45:59.932631
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 357):
@@ -485,6 +492,7 @@ bin/Release/game.so: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin/
 	$(_Q)$(CC) -shared $(_LIB_DIRS) $(OBJS) -o $@ $(_SYMBOLS) $(_LINK_LIBRARIES) $(BUILD_FLAGS)
 	@printf '\n'
 
+ 
 # Not a target:
 env/.release.mk:
 #  Implicit rule search has been done.
@@ -576,6 +584,7 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'Makefile', line 361):
 	$(if $(_CLEAN),@printf '   $(color_blue)Cleaning old build files & folders...\n\n',@printf '$(color_blue)')
 	$(_Q)$(RM) $(TARGET) $(DEPS) $(OBJS)
@@ -599,7 +608,7 @@ src/PCH.hpp:
 
 bin/Release:
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-21 22:24:28.2692033
+#  Last modified 2022-05-22 16:46:00.1162042
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 357):
@@ -632,6 +641,7 @@ bin/Release/dep/Platform/Unix:
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 357):
+ 
 	$(if $(_CLEAN),,@printf '\$(color_blue)')
 	$(MKDIR) $@
 
@@ -694,10 +704,11 @@ src/Hud.h:
 #  File has not been updated.
 
 bin/Release/dep/Main.cpp.d:
+ 
 #  Precious file (prerequisite of .PRECIOUS).
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Main.cpp'
-#  Last modified 2022-05-21 22:24:27.9769225
+#  Last modified 2022-05-22 16:45:59.8199344
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 468):
@@ -748,6 +759,7 @@ src/Platform/IPlatform.hpp:
 #  File has not been updated.
 
 # Not a target:
+ 
 env/.all.mk:
 #  Implicit rule search has been done.
 #  Last modified 2022-05-20 15:55:42.7363652
@@ -797,6 +809,7 @@ makepch: bin/Release/obj/PCH.hpp.gch
 
 # Not a target:
 .inl:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -823,7 +836,7 @@ bin:
 
 bin/Release/obj:
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-21 22:24:28.0138233
+#  Last modified 2022-05-22 16:45:59.8568625
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 357):
@@ -838,6 +851,7 @@ rebuild: clean all
 
 # Not a target:
 .c:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -859,7 +873,6 @@ releasetoprod: bin/Release/game.exe
 	$(_Q)sed -i 's/^Exec=.*/Exec=$(_LINUX_GREP_CWD)\/$(PRODUCTION_FOLDER)\/$(NAME)/' "$(PRODUCTION_FOLDER)/$(NAME).desktop"
 	$(_Q)sed -i 's/^Path=.*/Path=$(_LINUX_GREP_CWD)\/$(PRODUCTION_FOLDER)/' "$(PRODUCTION_FOLDER)/$(NAME).desktop"
 	$(_Q)sed -i 's/^Name=.*/Name=$(PRODUCTION_LINUX_APP_NAME)/' "$(PRODUCTION_FOLDER)/$(NAME).desktop"
- 
 	$(_Q)sed -i 's/^Comment=.*/Comment=$(PRODUCTION_LINUX_APP_COMMENT)/' "$(PRODUCTION_FOLDER)/$(NAME).desktop"
 	$(_Q)sed -i 's/^Icon=.*/Icon=$(_LINUX_GREP_CWD)\/$(PRODUCTION_FOLDER)\/$(PRODUCTION_LINUX_ICON).png/' "$(PRODUCTION_FOLDER)/$(NAME).desktop"
 	$(_Q)chmod +x "$(PRODUCTION_FOLDER)/$(NAME)"
@@ -887,6 +900,7 @@ bin/Release/dep/Utility:
 #  Last modified 2022-05-20 21:50:46.5335076
 #  File has been updated.
 #  Successfully updated.
+ 
 #  recipe to execute (from 'Makefile', line 357):
 	$(if $(_CLEAN),,@printf '\$(color_blue)')
 	$(MKDIR) $@
@@ -922,15 +936,11 @@ bin/Release/dep/%.d:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 bin/Release/obj/Main.cpp.o: src/Main.cpp src/Hud.h src/Mandelbrot.h src/ColorConvert.h src/Tools.h
- 
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 bin/Release/game.dll: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o
 #  Implicit rule search has not been done.
@@ -944,6 +954,7 @@ bin/Release/game.dll: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin
 
 # files hash-table stats:
 # Load=74/1024=7%, Rehash=0, Collisions=23/319=7%
+ 
 # VPATH Search Paths
 
 # No 'vpath' search paths.
@@ -956,7 +967,7 @@ bin/Release/game.dll: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin
 # strcache performance: lookups = 362 / hit rate = 67%
 # hash-table stats:
 # Load=119/8192=1%, Rehash=0, Collisions=10/362=3%
-# Finished Make data base on Sun May 22 16:05:40 2022
+# Finished Make data base on Sun May 22 16:49:16 2022
 
  
 # GNU Make 4.3
@@ -968,9 +979,9 @@ bin/Release/game.dll: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin
 # There is NO WARRANTY, to the extent permitted by law.
  
 
- 
-# Make data base, printed on Sun May 22 16:05:40 2022
+# Make data base, printed on Sun May 22 16:49:16 2022
 
+ 
 # Variables
 
 # environment
@@ -999,13 +1010,13 @@ _DIRECTORIES := bin bin/Release bin/Release/dep bin/Release/dep/Platform bin/Rel
 @D = $(patsubst %/,%,$(dir $@))
 # makefile (from 'Makefile', line 91)
 SOURCE_FILES := Main.cpp Platform/MacOS/MacOSPlatform.cpp Platform/Unix/LinuxPlatform.cpp Platform/Win32/Resource.rc Platform/Win32/WindowsPlatform.cpp
- 
 # makefile (from 'Makefile', line 171)
 OBJ_DIR := bin/Release/obj
 # makefile (from 'env/linux.all.mk', line 19)
 PRODUCTION_LINUX_ICON := sfml
 # makefile (from 'Makefile', line 99)
 _LINK_LIBRARIES := -lsfml-graphics -lsfml-audio -lsfml-network -lsfml-window -lsfml-system -lmpfr -lgmp -lstdc++fs -lX11
+ 
 # default
 .VARIABLES := 
 # makefile (from 'Makefile', line 385)
@@ -1022,7 +1033,6 @@ INCLUDE_DIRS := /usr/local/include
 # makefile (from 'Makefile', line 128)
 PRODUCTION_MACOS_MAKE_DMG = true
 # automatic
- 
 %F = $(notdir $%)
 # makefile (from 'Makefile', line 180)
 _DEPS := Main.cpp.d Platform/MacOS/MacOSPlatform.cpp.d Platform/Unix/LinuxPlatform.cpp.d Platform/Win32/WindowsPlatform.cpp.d
@@ -1060,7 +1070,6 @@ _BUILD_MACROS :=
 # makefile (from 'env/linux.all.mk', line 10)
 BUILD_FLAGS :=  -pthread
 # makefile (from 'Makefile', line 209)
- 
 _TARGET_DEPS := bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o  
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
@@ -1069,6 +1078,7 @@ PRODUCTION_DEPENDENCIES := content
 # makefile (from 'env/linux.all.mk', line 22)
 PRODUCTION_LINUX_APP_COMMENT := My SFML Game
 # makefile (from 'bin/Release/dep/PCH.d', line 1)
+ 
 MAKEFILE_LIST := Makefile env/.all.mk env/.release.mk env/linux.all.mk bin/Release/dep/Main.cpp.d bin/Release/dep/Platform/MacOS/MacOSPlatform.cpp.d bin/Release/dep/Platform/Unix/LinuxPlatform.cpp.d bin/Release/dep/Platform/Win32/WindowsPlatform.cpp.d bin/Release/dep/PCH.d
 # automatic
 @F = $(notdir $@)
@@ -1103,7 +1113,6 @@ OBJS := bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.
 # makefile (from 'Makefile', line 10)
 SHELL := /bin/sh
 # default
- 
 MAKECMDGOALS := all
 # makefile (from 'Makefile', line 242)
 UNI_COPY := ➦
@@ -1122,7 +1131,8 @@ MAKE = $(MAKE_COMMAND)
 # makefile (from 'Makefile', line 16)
 _BUILDL := release
 # environment
-PATH = /c/Program Files/Git/mingw64/bin:/c/Program Files/Git/usr/bin:/c/Users/Ryan/bin:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/Program Files (x86)/Intel/iCLS Client:/c/Program Files/Intel/iCLS Client:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/IPT:/c/Program Files/Intel/Intel(R) Management Engine Components/IPT:/d/games/iracing:/c/WINDOWS/System32/OpenSSH:/c/Program Files (x86)/QuickTime/QTSystem:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/Program Files (x86)/Common Files/Acronis/VirtualFile:/c/Program Files (x86)/Common Files/Acronis/VirtualFile64:/c/Program Files (x86)/Common Files/Acronis/SnapAPI:/c/WINDOWS/system32/config/systemprofile/.dnx/bin:/c/Program Files/Microsoft DNX/Dnvm:/c/Program Files/Microsoft SQL Server/130/Tools/Binn:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/WINDOWS/System32/OpenSSH:/c/Program Files/PuTTY:/c/Program Files/dotnet:/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit:/c/Program Files/Git/cmd:/c/MinGW/bin:/c/Program Files/CMake/bin:C:/c/Users/Ryan/AppData/Local/Microsoft/WindowsApps:/c/Users/Ryan/AppData/Local/Programs/Microsoft VS Code/bin:/mingw64/bin:/usr/bin
+PATH = /c/Program Files/Git/mingw64/bin:/c/Program Files/Git/usr/bin:/c/Users/Ryan/bin:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/Program Files (x86)/Intel/iCLS Client:/c/Program Files/Intel/iCLS Client:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/IPT:/c/Program Files/Intel/Intel(R) Management Engine Components/IPT:/d/games/iracing:/c/WINDOWS/System32/OpenSSH:/c/Program Files (x86)/QuickTime/QTSystem:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/Program Files (x86)/Common Files/Acronis/VirtualFile:/c/Program Files (x86)/Common Files/Acronis/VirtualFile64:/c/Program Files (x86)/Common Files/Acronis/SnapAPI:/c/WINDOWS/system32/config/systemprofile/.dnx/bin:/c/Program Files/Microso 
+ft DNX/Dnvm:/c/Program Files/Microsoft SQL Server/130/Tools/Binn:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/WINDOWS/System32/OpenSSH:/c/Program Files/PuTTY:/c/Program Files/dotnet:/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit:/c/Program Files/Git/cmd:/c/MinGW/bin:/c/Program Files/CMake/bin:C:/c/Users/Ryan/AppData/Local/Microsoft/WindowsApps:/c/Users/Ryan/AppData/Local/Programs/Microsoft VS Code/bin:/mingw64/bin:/usr/bin
 # makefile (from 'Makefile', line 74)
 BUILD_MACROS = 
 # default
@@ -1135,7 +1145,6 @@ _INCLUDE_DIRS := -Isrc/ -Ilib/ -I/usr/local/include
 PRODUCTION_MACOS_BUNDLE_COMPANY = developer
 # makefile (from 'Makefile', line 221)
 CFLAGS_DEPS_T = -MT $@ -MMD -MP -MF $(DEP_DIR)/.$(TEST_DIR)/$*.Td
- 
 # makefile (from 'Makefile', line 282)
 linking_with = 	$(if $(_CLEAN),@printf '\n$(color_blue)$(UNI_LINK)  Linking: $(1)')
 # makefile (from 'Makefile', line 222)
@@ -1184,13 +1193,13 @@ _PCH_COMPILER_EXT := gch
 MAKE_VERSION := 4.3
 # 'override' directive
 .SHELLSTATUS := 0
+ 
 # makefile (from 'Makefile', line 15)
 BUILD = Release
 # makefile (from 'env/.all.mk', line 21)
 PRODUCTION_FOLDER := build
 # makefile (from 'Makefile', line 238)
 POST_COMPILE_RC = mv -f $(DEP_DIR)/$*.rc.Td $(DEP_DIR)/$*.rc.d && touch $@
- 
 # makefile (from 'Makefile', line 103)
 TEST_DIR := 
 # makefile (from 'Makefile', line 254)
@@ -1233,7 +1242,6 @@ BUILD_DEPENDENCIES =
 DEPS := bin/Release/dep/Main.cpp.d bin/Release/dep/Platform/MacOS/MacOSPlatform.cpp.d bin/Release/dep/Platform/Unix/LinuxPlatform.cpp.d bin/Release/dep/Platform/Win32/WindowsPlatform.cpp.d bin/Release/dep/PCH.d
 # makefile (from 'Makefile', line 2)
 SUFFIXES = 
- 
 # makefile (from 'Makefile', line 162)
 TARGET := bin/Release/game.exe
 # makefile (from 'Makefile', line 154)
@@ -1241,6 +1249,7 @@ _BASENAME := game
 # makefile (from 'env/.all.mk', line 19)
 PRECOMPILED_HEADER := PCH
 # makefile (from 'env/.all.mk', line 6)
+ 
 _CFLAGS_WARNINGS := -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr
 # makefile (from 'Makefile', line 88)
 LIB_DIR := lib
@@ -1272,8 +1281,8 @@ POST_COMPILE_T = mv -f $(DEP_DIR)/.$(TEST_DIR)/$*.Td $(DEP_DIR)/.$(TEST_DIR)/$*.
 # bin/Release/dep (device 1755845519, inode 23925373020587700): No files, no impossibilities so far.
 
 # 17 files, no impossibilities in 6 directories.
-
  
+
 # Implicit Rules
 
 bin/Release/obj/%.o: src/% bin/Release/obj/PCH.hpp.gch | bin/Release/dep/%.d bin bin/Release bin/Release/dep bin/Release/dep/Platform bin/Release/dep/Platform/MacOS bin/Release/dep/Platform/Unix bin/Release/dep/Platform/Win32 bin/Release/dep/Utility bin/Release/obj bin/Release/obj/Platform bin/Release/obj/Platform/MacOS bin/Release/obj/Platform/Unix bin/Release/obj/Platform/Win32 bin/Release/obj/Utility
@@ -1328,6 +1337,7 @@ bin/Release/dep/%.d:
 
 %.asm:
 
+ 
 # 17 implicit rules, 0 (0.0%) terminal.
 # Files
 
@@ -1335,7 +1345,6 @@ bin/Release/dep/%.d:
 .cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 # Not a target:
@@ -1383,7 +1392,6 @@ bin/Release/obj/Platform/MacOS:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  recipe to execute (from 'Makefile', line 357):
 	$(if $(_CLEAN),,@printf '\$(color_blue)')
 	$(MKDIR) $@
@@ -1393,6 +1401,7 @@ src/Utility/FileSystem.hpp:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 bin/Release/obj/Platform/Unix:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1438,7 +1447,6 @@ makeproduction: rmprod mkdirprod releasetoprod
 #  File has not been updated.
 
 bin/Release/game.so: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1452,6 +1460,7 @@ env/.release.mk:
 #  Implicit rule search has been done.
 #  Last modified 2022-04-25 19:21:17.2817903
 #  File has been updated.
+ 
 #  Successfully updated.
 
 # Not a target:
@@ -1494,7 +1503,6 @@ bin/Release/dep/Platform/MacOS:
 	$(if $(_CLEAN),,@printf '\$(color_blue)')
 	$(MKDIR) $@
 
- 
 # Not a target:
 .asm:
 #  Implicit rule search has not been done.
@@ -1506,6 +1514,7 @@ bin/Release/obj/Platform:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 357):
+ 
 	$(if $(_CLEAN),,@printf '\$(color_blue)')
 	$(MKDIR) $@
 
@@ -1555,6 +1564,7 @@ src/PCH.hpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 bin/Release:
 #  Implicit rule search has not been done.
@@ -1565,7 +1575,6 @@ bin/Release:
 	$(MKDIR) $@
 
 bin/Release/game.exe: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1601,6 +1610,7 @@ src/Platform/Win32/Resource.h:
 bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o: src/Platform/MacOS/MacOSPlatform.cpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 src/Platform/Win32/WindowsPlatform.hpp:
@@ -1623,7 +1633,6 @@ makebuild: bin/Release/game.exe
 
 bin/Release/obj/Utility:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 357):
@@ -1655,10 +1664,11 @@ bin/Release/dep/Main.cpp.d:
 #  Precious file (prerequisite of .PRECIOUS).
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Main.cpp'
-#  Last modified 2022-05-21 22:24:27.9769225
+#  Last modified 2022-05-22 16:45:59.8199344
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 468):
+ 
 	
 
 all:
@@ -1719,6 +1729,7 @@ src/Platform/IPlatform.hpp:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 # Not a target:
 .res:
 #  Implicit rule search has not been done.
@@ -1739,7 +1750,6 @@ env/.all.mk:
 #  File has not been updated.
 
 # Not a target:
- 
 src/Main.cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1780,6 +1790,7 @@ bin:
 
 bin/Release/obj:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 357):
@@ -1821,7 +1832,6 @@ releasetoprod: bin/Release/game.exe
 	$(_Q)chmod +x "$(PRODUCTION_FOLDER)/$(NAME).desktop"
 	@printf '   Applications directory does not exist, not copying desktop file.\n'
 
- 
 # Not a target:
 src/Platform/Unix/LinuxPlatform.cpp:
 #  Implicit rule search has not been done.
@@ -1840,6 +1850,7 @@ bin/Release/game: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin/Rel
 
 bin/Release/dep/Utility:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 357):
@@ -1874,6 +1885,7 @@ bin/Release/dep/%.d:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 bin/Release/obj/Main.cpp.o: src/Main.cpp src/Hud.h src/Mandelbrot.h src/ColorConvert.h src/Tools.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1902,8 +1914,7 @@ bin/Release/game.dll: bin/Release/obj/PCH.hpp.gch bin/Release/obj/Main.cpp.o bin
 
 # strcache performance: lookups = 325 / hit rate = 63%
 # hash-table stats:
- 
 # Load=119/8192=1%, Rehash=0, Collisions=7/325=2%
-# Finished Make data base on Sun May 22 16:05:40 2022
+# Finished Make data base on Sun May 22 16:49:16 2022
 
  
