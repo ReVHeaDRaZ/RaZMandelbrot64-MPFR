@@ -10,43 +10,46 @@ sf::VertexArray vertexarrayPoints(sf::Points, MAX_NUM_PARTICLES); // To store ca
 sf::Vector2i mousePos;											  // To store mouse position
 
 constexpr int maxThreads = 8; // Max amount of threads to use for Fractal function
-bool useMPFR = false;
 
 sf::Color interiorColor = sf::Color::Black; // Used for interior Coloring of mandelbrot
 unsigned char interiorHue = 0;
 HsvColor bhsv = { 255, 255, 100 };
 RgbColor brgb;
 
-sf::Clock colortimer;			// Use a timer for animated color method
+sf::Clock colortimer;	// Use a timer for animated color method
 bool animated = false;
 
-float rAmount = 1.0f; // RGB Multipliers to change colors
+float rAmount = 1.0f; 	// RGB Multipliers to change colors
 float gAmount = 0.2f;
 float bAmount = 0.2f;
-int colorMethod = 0; // For Selecting method of colorization
+int colorMethod = 0; 	// For Selecting method of colorization
 
-double offsetX = 0.0; // Used for Panning
+double offsetX = 0.0; 			// Used for Panning
 double offsetY = 0.0;
-double zmx1 = WIN_WIDTH / 4; // Used for Zooming
+double zmx1 = WIN_WIDTH / 4; 	// Used for Zooming
 double zmx2 = 2;
 double zmy1 = WIN_HEIGHT / 4;
 double zmy2 = 2;
 double zmAmount = 1.1;
-mpfr_t offsetX_T,offsetY_T,zmx1_T,zmx2_T,zmy1_T,zmy2_T, zmAmount_T, bail_T, t1_T;
+
+mpfr_t offsetX_T,offsetY_T,zmx1_T,zmx2_T,zmy1_T,zmy2_T, zmAmount_T, bail_T, t1_T; // MPFR copies of Pan and Zoom variables
+bool useMPFR = false;			// To turn MPFR on/off
+int mpfrPrecision = 80;			// MPFR bits of mantissa precision
 
 bool zoomIn = false;
 bool zoomOut = false;
 bool autoZoomIn = false;
 int maxiterations = 128;
-bool autoIterations = false;
+bool autoIterations = false;		// Auto increment iterations during zoom
+bool canCalculateFractal = true;	// For only calculating Fractal after a zoom or pan
 
 const double escapeRadius = 4.0;
 const double eps = 0.001;
 
 // Normal Mapping variables
 const double doublepi = 3.141592653589793238;
-double lightHeight = 1.6; 		// Height Factor of incoming light
-double angle = 45.0; 	// Angle of incoming light
+double lightHeight = 1.6; 	// Height Factor of incoming light
+double angle = 45.0; 		// Angle of incoming light
 const std::complex<double> complexi(0, 1);
 std::complex<double> u;
 std::complex<double> v = exp(complexi*angle*2.0*doublepi/360.0);
@@ -55,7 +58,6 @@ bool normalMap = false;
 
 sf::Image image;	// To store image for From Image Color Method
 
-int mpfrPrecision = 80;
 
 void InitVertexArray();
 void InitMPFR();
@@ -444,6 +446,8 @@ void CreateFractalThreads()
 
 	for (size_t i = 0; i < maxThreads; i++)
 		t[i].join();
+
+	canCalculateFractal = false;
 }
 
 void ResetView()
@@ -469,6 +473,8 @@ void ResetView()
 	mpfr_set_d(zmy2_T, zmy2, GMP_RNDN);
 	mpfr_set_d(zmAmount_T, zmAmount, GMP_RNDN);
 	mpfr_set_d(t1_T, 0.0, GMP_RNDN);
+
+	canCalculateFractal = true;
 }
 
 void ZoomIn(sf::Window& window)
@@ -502,6 +508,7 @@ void ZoomIn(sf::Window& window)
 	mpfr_mul(offsetY_T, offsetY_T, zmAmount_T, GMP_RNDN);
 	if (makeVideoFrames)
 		TakeScreenshot(window);
+	canCalculateFractal = true;
 }
 
 void ZoomOut(sf::Window& window)
@@ -531,4 +538,6 @@ void ZoomOut(sf::Window& window)
 	mpfr_div(offsetX_T, offsetX_T, zmAmount_T, GMP_RNDN);
 	offsetY = offsetY / zmAmount;
 	mpfr_div(offsetY_T, offsetY_T, zmAmount_T, GMP_RNDN);
+
+	canCalculateFractal = true;
 }

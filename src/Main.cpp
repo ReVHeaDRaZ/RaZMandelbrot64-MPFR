@@ -98,14 +98,28 @@ int main(int argc, char* argv[])
 			{
 				if (event.key.code == sf::Keyboard::Key::Escape)
 					window.close();
-				if (event.key.code == sf::Keyboard::Key::Up)
+				// Pan
+				if (event.key.code == sf::Keyboard::Key::Up){
 					offsetY -= 10;
-				if (event.key.code == sf::Keyboard::Key::Down)
+					mpfr_set_d(offsetY_T, offsetY, GMP_RNDN);
+					canCalculateFractal = true;
+				}
+				if (event.key.code == sf::Keyboard::Key::Down){
 					offsetY += 10;
-				if (event.key.code == sf::Keyboard::Key::Left)
+					mpfr_set_d(offsetY_T, offsetY, GMP_RNDN);
+					canCalculateFractal = true;
+				}
+				if (event.key.code == sf::Keyboard::Key::Left){
 					offsetX -= 10;
-				if (event.key.code == sf::Keyboard::Key::Right)
+					mpfr_set_d(offsetX_T, offsetX, GMP_RNDN);
+					canCalculateFractal = true;
+				}
+				if (event.key.code == sf::Keyboard::Key::Right){
 					offsetX += 10;
+					mpfr_set_d(offsetX_T, offsetX, GMP_RNDN);
+					canCalculateFractal = true;
+				}
+				// Color
 				if (event.key.code == sf::Keyboard::Key::R){
 					rAmount -= 0.05f;
 					if(rAmount<0.f) rAmount=0.f;
@@ -175,23 +189,26 @@ int main(int argc, char* argv[])
 					}
 					if (colorMethod > 5)
 						colorMethod = 0;
+
+					canCalculateFractal = true;
 				}
 				if (event.key.code == sf::Keyboard::Key::PageUp)
 				{
-					maxiterations += 16;
+					maxiterations += 8;
 					currentIterations.setString(to_string(maxiterations));
 				}
 				if (event.key.code == sf::Keyboard::Key::PageDown)
 				{
-					maxiterations -= 16;
-					if (maxiterations < 16)
-						maxiterations = 16;
+					maxiterations -= 8;
+					if (maxiterations < 8)
+						maxiterations = 8;
 					currentIterations.setString(to_string(maxiterations));
 				}
 				if (event.key.code == sf::Keyboard::Key::I)
 					showControls = !showControls;
 				if (event.key.code == sf::Keyboard::Key::A)
 					animated = !animated;
+				// Normal Map
 				if (event.key.code == sf::Keyboard::Key::X)
 					normalMap = !normalMap;
 				if (event.key.code == sf::Keyboard::Key::End){
@@ -242,9 +259,11 @@ int main(int argc, char* argv[])
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
 				if (event.mouseButton.button == sf::Mouse::Button::Left)
-					zoomIn = true;
+					if(!autoZoomIn)
+						zoomIn = true;
 				if (event.mouseButton.button == sf::Mouse::Button::Right)
-					zoomOut = true;
+					if(!autoZoomIn)
+						zoomOut = true;
 				if (event.mouseButton.button == sf::Mouse::Button::Middle) // Reset View
 				{
 					ResetView();
@@ -262,26 +281,27 @@ int main(int argc, char* argv[])
 		if (zoomIn && !zoomOut){
 			ZoomIn(window);
 			if(autoIterations){
-				maxiterations+=2;
+				maxiterations+=4;
 				currentIterations.setString(to_string(maxiterations));
 			}
 		}
 		if (zoomOut && !zoomIn){
 			ZoomOut(window);
 			if(autoIterations){
-				maxiterations-=2;
+				maxiterations-=4;
 				if(maxiterations<8) maxiterations=8;
 				currentIterations.setString(to_string(maxiterations));
 			}
 		}
 
+		if(canCalculateFractal)
+			CreateFractalThreads(); // Using threads
+
 		// Draw
 		window.clear();
 
-		CreateFractalThreads(); // Using threads
-		//CalculateFractal(0, WIN_WIDTH); 	// No threads
-
 		window.draw(vertexarrayPoints, sf::BlendAdd);
+
 		if (takeScreenshot)
 		{
 			TakeScreenshot(window);

@@ -14,8 +14,8 @@ mkdir -p bin/Release/dep/Platform/Unix
 mkdir -p bin/Release/dep/Platform/Win32
 mkdir -p bin/Release/dep/Utility
 mkdir -p bin/Release/obj
-mkdir -p bin/Release/obj/Platform
  
+mkdir -p bin/Release/obj/Platform
 mkdir -p bin/Release/obj/Platform/MacOS
 mkdir -p bin/Release/obj/Platform/Unix
  
@@ -23,15 +23,15 @@ mkdir -p bin/Release/obj/Platform/Win32
 mkdir -p bin/Release/obj/Utility
  
 printf '   \033[0;34msrc/PCH.hpp\n'
- 
 g++ -MT bin/Release/obj/PCH.hpp.gch -MMD -MP -MF bin/Release/dep/PCH.Td  -O2 -std=c++17 -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr -fdiagnostics-color=always -fpic -Isrc/ -Ilib/ -I/usr/local/include -o bin/Release/obj/PCH.hpp.gch -c src/PCH.hpp && mv -f bin/Release/dep/PCH.Td bin/Release/dep/PCH.d && touch bin/Release/obj/PCH.hpp.gch
+ 
 printf ''
  
 /usr/bin/make -j8 makebuild
  
 mkdir -p bin
-mkdir -p bin/Release
  
+mkdir -p bin/Release
 mkdir -p bin/Release/dep
 mkdir -p bin/Release/dep/Platform
 mkdir -p bin/Release/dep/Platform/MacOS
@@ -39,8 +39,8 @@ mkdir -p bin/Release/dep/Platform/MacOS
 mkdir -p bin/Release/dep/Platform/Unix
 mkdir -p bin/Release/dep/Platform/Win32
 mkdir -p bin/Release/dep/Utility
- 
 mkdir -p bin/Release/obj
+ 
 mkdir -p bin/Release/obj/Platform
 mkdir -p bin/Release/obj/Platform/MacOS
 mkdir -p bin/Release/obj/Platform/Unix
@@ -53,7 +53,6 @@ printf '   \033[0;34msrc/PCH.hpp\n'
 g++ -MT bin/Release/obj/PCH.hpp.gch -MMD -MP -MF bin/Release/dep/PCH.Td  -O2 -std=c++17 -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr -fdiagnostics-color=always -fpic -Isrc/ -Ilib/ -I/usr/local/include -o bin/Release/obj/PCH.hpp.gch -c src/PCH.hpp && mv -f bin/Release/dep/PCH.Td bin/Release/dep/PCH.d && touch bin/Release/obj/PCH.hpp.gch
  
 printf '   \033[0;34msrc/Main.cpp\n'
- 
 g++ -MT bin/Release/obj/Main.cpp.o -MMD -MP -MF bin/Release/dep/Main.cpp.Td  -Isrc/ -Ilib/ -I/usr/local/include -include bin/Release/obj/PCH.hpp -O2 -std=c++17 -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr -fdiagnostics-color=always -fpic -o bin/Release/obj/Main.cpp.o -c src/Main.cpp && mv -f bin/Release/dep/Main.cpp.Td bin/Release/dep/Main.cpp.d && touch bin/Release/obj/Main.cpp.o
  
 printf '   \033[0;34msrc/Platform/MacOS/MacOSPlatform.cpp\n'
@@ -61,12 +60,11 @@ printf '   \033[0;34msrc/Platform/MacOS/MacOSPlatform.cpp\n'
 g++ -MT bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o -MMD -MP -MF bin/Release/dep/Platform/MacOS/MacOSPlatform.cpp.Td  -Isrc/ -Ilib/ -I/usr/local/include -include bin/Release/obj/PCH.hpp -O2 -std=c++17 -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr -fdiagnostics-color=always -fpic -o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o -c src/Platform/MacOS/MacOSPlatform.cpp && mv -f bin/Release/dep/Platform/MacOS/MacOSPlatform.cpp.Td bin/Release/dep/Platform/MacOS/MacOSPlatform.cpp.d && touch bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o
  
 printf '   \033[0;34msrc/Platform/Unix/LinuxPlatform.cpp\n'
- 
 g++ -MT bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o -MMD -MP -MF bin/Release/dep/Platform/Unix/LinuxPlatform.cpp.Td  -Isrc/ -Ilib/ -I/usr/local/include -include bin/Release/obj/PCH.hpp -O2 -std=c++17 -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr -fdiagnostics-color=always -fpic -o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o -c src/Platform/Unix/LinuxPlatform.cpp && mv -f bin/Release/dep/Platform/Unix/LinuxPlatform.cpp.Td bin/Release/dep/Platform/Unix/LinuxPlatform.cpp.d && touch bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o
  
 printf '   \033[0;34msrc/Platform/Win32/WindowsPlatform.cpp\n'
- 
 g++ -MT bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o -MMD -MP -MF bin/Release/dep/Platform/Win32/WindowsPlatform.cpp.Td  -Isrc/ -Ilib/ -I/usr/local/include -include bin/Release/obj/PCH.hpp -O2 -std=c++17 -Wall -Werror -Wextra -Wpedantic -Wunreachable-code -Wunused -Wignored-qualifiers -Wcast-align -Wformat-nonliteral -Wformat=2 -Winvalid-pch -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs -Wredundant-decls -Wswitch-default -Wodr -fdiagnostics-color=always -fpic -o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o -c src/Platform/Win32/WindowsPlatform.cpp && mv -f bin/Release/dep/Platform/Win32/WindowsPlatform.cpp.Td bin/Release/dep/Platform/Win32/WindowsPlatform.cpp.d && touch bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o
+ 
 printf '\n\033[0;34m⇛  Linking: bin/Release/game.exe'
 g++ -Llib/ -L/usr/local/lib -s -o bin/Release/game.exe '-Wl,-R$ORIGIN' bin/Release/obj/Main.cpp.o bin/Release/obj/Platform/MacOS/MacOSPlatform.cpp.o bin/Release/obj/Platform/Unix/LinuxPlatform.cpp.o bin/Release/obj/Platform/Win32/WindowsPlatform.cpp.o -lsfml-graphics -lsfml-audio -lsfml-network -lsfml-window -lsfml-system -lmpfr -lgmp -lstdc++fs -lX11  -pthread
 printf '\n'
