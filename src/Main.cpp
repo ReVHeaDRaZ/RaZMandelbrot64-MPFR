@@ -271,7 +271,8 @@ int main(int argc, char* argv[])
 					hudMpfr.setString(to_string(mpfrPrecision));
 				}
 				if (event.key.code == sf::Keyboard::Key::F5){
-					burningShip = !burningShip;
+					fractalType++;
+					if(fractalType==FRACTALTYPE_COUNT) fractalType = 0;
 					canCalculateFractal = true;
 				}
 			}

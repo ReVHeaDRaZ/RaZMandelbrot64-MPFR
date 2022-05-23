@@ -58,6 +58,8 @@ bool normalMap = false;
 
 sf::Image image;	// To store image for From Image Color Method
 
+enum fractalType_e {MANDELBROT, BURNINGSHIP, CELTIC, FRACTALTYPE_COUNT};
+int fractalType = MANDELBROT;
 
 void InitVertexArray();
 void InitMPFR();
@@ -68,7 +70,9 @@ void CreateFractalThreads();
 void ResetView();
 void ZoomIn(sf::Window& window);
 void ZoomOut(sf::Window& window);
+void MandelbrotFractal(double& a, double& b, double ca, double cb);
 void BurningShipFractal(double& a, double& b, double ca, double cb);
+void CelticFractal(double& a, double& b, double ca, double cb);
 
 void InitVertexArray()
 {
@@ -151,11 +155,24 @@ void SetMPFRPrecision(){
 	mpfr_clear(temp);
 }
 
+void MandelbrotFractal(double& a, double& b, double ca, double cb){
+	double aa = a * a - b * b;
+	double bb = 2 * a * b;
+	a = aa + ca;
+	b = bb + cb;
+}
+
 void BurningShipFractal(double& a, double& b, double ca, double cb){
 	double aa = a * a - b * b;
 	double bb = 2 * abs(a * b);
-	a = aa - ca;
+	a = aa + ca;
 	b = bb - cb;
+}
+void CelticFractal(double& a, double& b, double ca, double cb){
+	double aa = abs(a * a - b * b);
+	double bb = 2 * a * b;
+	a = aa + ca;
+	b = bb + cb;
 }
 
 void CalculateFractal(uint start, uint end)
@@ -173,7 +190,7 @@ void CalculateFractal(uint start, uint end)
 			double b = zmy2 - (y + offsetY) / zmy1; // Y with Pan and Zoom;
 			double ca = a;							// Store Constant a and b
 			double cb = b;
-			double n = 0;							// To storing Iterations
+			double n = 0;							// To store Iterations
 			double absOld = 0.0;
 			double convergeNumber = maxiterations; 	// Changes if the while loop breaks due to non-convergence
 			std::complex<double> der(1.0,1.0); 		// To store derivative
@@ -185,12 +202,20 @@ void CalculateFractal(uint start, uint end)
 				double abs = sqrt(a * a + b * b);
 
 				// z2 + c
-				if(!burningShip){
-					double aa = a * a - b * b;
-					double bb = 2 * a * b;
-					a = aa + ca;
-					b = bb + cb;
-				}else BurningShipFractal(a, b, ca, cb);
+				switch(fractalType){
+					case MANDELBROT:
+						MandelbrotFractal(a, b, ca, cb);
+						break;
+					case BURNINGSHIP:
+						BurningShipFractal(a, b, ca, cb);
+						break;
+					case CELTIC:
+						CelticFractal(a, b, ca, cb);
+						break;
+					default:
+						MandelbrotFractal(a, b, ca, cb);
+						break;
+				}
 
 				// Interior Detection
 				der = der*2.0*z;
@@ -331,30 +356,74 @@ void CalculateFractalMPFR(uint start, uint end)
 			//double cb = b;
 			mpfr_set(cb_M, b_M, GMP_RNDN);
 
-			double n = 0;							// To storing Iterations
+			double n = 0;							// To store Iterations
 			bool inside=false;
 
 			while (n < maxiterations)
 			{
-				// z2 + c
-				//double aa = a * a - b * b;
+				//double abs = sqrt(a * a + b * b);
 				mpfr_mul(a2_M, a_M, a_M, GMP_RNDN);
 				mpfr_mul(b2_M, b_M, b_M, GMP_RNDN);
-				mpfr_sub(aa_M, a2_M, b2_M, GMP_RNDN);
-
-				//double bb = 2 * a * b;
-				mpfr_mul_d(bb_M, a_M, 2.0, GMP_RNDN);
-				mpfr_mul(bb_M, bb_M, b_M, GMP_RNDN);
-
-				//double abs = sqrt(a * a + b * b);
 				mpfr_add(abs_M, a2_M, b2_M, GMP_RNDN);
 				mpfr_sqrt(abs_M, abs_M, GMP_RNDN);
-				//double abs = sqrt(mpfr_get_d(abs_M, GMP_RNDU));
 
-				//a = aa + ca;
-				mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
-				//b = bb + cb;
-				mpfr_add(b_M, bb_M, cb_M, GMP_RNDN);
+				// z2 + c
+				switch(fractalType){
+				case MANDELBROT:
+					//double aa = a * a - b * b;
+					mpfr_sub(aa_M, a2_M, b2_M, GMP_RNDN);
+
+					//double bb = 2 * a * b;
+					mpfr_mul_d(bb_M, a_M, 2.0, GMP_RNDN);
+					mpfr_mul(bb_M, bb_M, b_M, GMP_RNDN);
+
+					//a = aa + ca;
+					mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
+					//b = bb + cb;
+					mpfr_add(b_M, bb_M, cb_M, GMP_RNDN);
+					break;
+				case BURNINGSHIP:
+					//double aa = a * a - b * b;
+					mpfr_sub(aa_M, a2_M, b2_M, GMP_RNDN);
+
+					//double bb = 2 * abs(a * b);
+					mpfr_mul(bb_M, a_M, b_M, GMP_RNDN);
+					mpfr_abs(bb_M, bb_M, GMP_RNDN);
+					mpfr_mul_d(bb_M, bb_M, 2.0, GMP_RNDN);
+
+					//a = aa + ca;
+					mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
+					//b = bb - cb;
+					mpfr_sub(b_M, bb_M, cb_M, GMP_RNDN);
+					break;
+				case CELTIC:
+					//double aa = abs(a * a - b * b);
+					mpfr_sub(aa_M, a2_M, b2_M, GMP_RNDN);
+					mpfr_abs(aa_M, aa_M, GMP_RNDN);
+
+					//double bb = 2 * a * b;
+					mpfr_mul_d(bb_M, a_M, 2.0, GMP_RNDN);
+					mpfr_mul(bb_M, bb_M, b_M, GMP_RNDN);
+
+					//a = aa + ca;
+					mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
+					//b = bb + cb;
+					mpfr_add(b_M, bb_M, cb_M, GMP_RNDN);
+					break;
+				default:
+					//double aa = a * a - b * b;
+					mpfr_sub(aa_M, a2_M, b2_M, GMP_RNDN);
+
+					//double bb = 2 * a * b;
+					mpfr_mul_d(bb_M, a_M, 2.0, GMP_RNDN);
+					mpfr_mul(bb_M, bb_M, b_M, GMP_RNDN);
+
+					//a = aa + ca;
+					mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
+					//b = bb + cb;
+					mpfr_add(b_M, bb_M, cb_M, GMP_RNDN);
+					break;
+				}
 
 				// Outside of set
 				if (mpfr_greater_p(abs_M,bail_T))
