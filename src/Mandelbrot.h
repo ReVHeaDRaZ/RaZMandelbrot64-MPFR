@@ -308,7 +308,7 @@ void CalculateFractal(uint start, uint end)
 }
 void CalculateFractalMPFR(uint start, uint end)
 {
-	mpfr_t a2_M, b2_M, a_M, b_M, aa_M, bb_M, ca_M, cb_M, y_M, x_M, abs_M, absold_M, difftolast_M,difftomax_M;
+	mpfr_t a2_M, b2_M, a_M, b_M, aa_M, bb_M, ca_M, cb_M, y_M, x_M, abs_M, absold_M, difftolast_M, difftomax_M;
 
 	mpfr_init2(a2_M, mpfrPrecision);
 	mpfr_init2(b2_M, mpfrPrecision);
@@ -325,9 +325,6 @@ void CalculateFractalMPFR(uint start, uint end)
 	mpfr_init2(difftolast_M, mpfrPrecision);
 	mpfr_init2(difftomax_M, mpfrPrecision);
 
-	mpfr_set_d(absold_M, 0.0, GMP_RNDN);
-
-	double convergeNumber = maxiterations; 	// Changes if the while loop breaks due to non-convergence
 	// Store colortimer value to animate color methods
 	float colortime = 0.f;
 	if(animated)
@@ -357,6 +354,11 @@ void CalculateFractalMPFR(uint start, uint end)
 			mpfr_set(cb_M, b_M, GMP_RNDN);
 
 			double n = 0;							// To store Iterations
+			//double absOld = 0.0;
+			mpfr_set_d(absold_M, 0.0, GMP_RNDN);
+			double convergeNumber = maxiterations; 	// Changes if the while loop breaks due to non-convergence
+			std::complex<double> der(1.0,1.0); 		// To store derivative
+			std::complex<double> z(mpfr_get_d(ca_M, GMP_RNDN),mpfr_get_d(cb_M,GMP_RNDN));			// To store complex z
 			bool inside=false;
 
 			while (n < maxiterations)
@@ -422,6 +424,16 @@ void CalculateFractalMPFR(uint start, uint end)
 					mpfr_add(a_M, aa_M, ca_M, GMP_RNDN);
 					//b = bb + cb;
 					mpfr_add(b_M, bb_M, cb_M, GMP_RNDN);
+					break;
+				}
+
+				// Interior Detection
+				der = der*2.0*z;
+				z = std::complex<double>(mpfr_get_d(a_M,GMP_RNDN),mpfr_get_d(b_M, GMP_RNDN));
+
+				if(sqrt(der.real()*der.real()+der.imag()*der.imag()) < eps*eps){
+					n = maxiterations;
+					inside=true;
 					break;
 				}
 
@@ -491,7 +503,18 @@ void CalculateFractalMPFR(uint start, uint end)
 						vertexarrayPoints[x + y * WIN_WIDTH].color = sf::Color(brightness * rAmount, brightness * gAmount, brightness * bAmount, 255);
 						break;
 				}
-
+				// Normal Map
+				if(normalMap){
+					u = z/der;
+					u = u/abs(u);
+					t = u.real()*v.real() + u.imag()*v.imag() + lightHeight;
+					t = t/(1+lightHeight);
+					if(t<0) t=0;
+					if(colorMethod==0)	// Single Color NormalMap
+						vertexarrayPoints[x + y * WIN_WIDTH].color = LerpColor(sf::Color::Black,sf::Color(rAmount*255,gAmount*255,bAmount*255,255),t);
+					else
+						vertexarrayPoints[x + y * WIN_WIDTH].color = LerpColor(sf::Color::Black,vertexarrayPoints[x + y * WIN_WIDTH].color,t);
+				}
 			}
 		}
 	}
