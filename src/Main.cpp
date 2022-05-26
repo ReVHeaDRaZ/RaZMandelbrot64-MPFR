@@ -259,6 +259,8 @@ int main(int argc, char* argv[])
 					mpfr_set_d(offsetY_T, 0.0, GMP_RNDN);
 					canCalculateFractal = true;
 				}
+				if (event.key.code == sf::Keyboard::Key::F4)
+					lockOffsetY = !lockOffsetY;
 				if (event.key.code == sf::Keyboard::Key::F11){
 					mpfrPrecision = mpfrPrecision - 16;
 					if(mpfrPrecision < 80) mpfrPrecision = 80;

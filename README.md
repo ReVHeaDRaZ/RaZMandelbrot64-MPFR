@@ -27,5 +27,7 @@ This is the same as RaZMandelbrot but 64bit and MPFR implemented for deep zooms
 | <b>F1-</b> | Auto Zoom In |
 | <b>F2-</b> | Auto Iterations |
 | <b>F3-</b> | Reset Y Offset |
-| <b>F3-</b> | Change Fractal (Burning Ship) |
+| <b>F4-</b> | Lock Y Offset |
+| <b>F5-</b> | Change Fractal (Burning Ship) |
+| <b>F11 and F12-</b> | Change MPFR Precision -/+ |
 | <b>I-</b> | Show Controls |

@@ -62,31 +62,13 @@ void CreatePalettes()
 	palette2.push_back(sf::Color(255, 180, 0));
 	palette2.push_back(sf::Color(255, 200, 0));
 	palette2.push_back(sf::Color(255, 220, 0));
-	palette2.push_back(sf::Color(255, 255, 20));	 // Yellow
+	palette2.push_back(sf::Color(255, 255, 10));	 // Yellow
+	palette2.push_back(sf::Color(255, 255, 20));
 	palette2.push_back(sf::Color(255, 255, 30));
-	palette2.push_back(sf::Color(255, 255, 40));
-	palette2.push_back(sf::Color(255, 255, 50));
-	palette2.push_back(sf::Color(255, 255, 60));
-	palette2.push_back(sf::Color(255, 255, 70));
-	palette2.push_back(sf::Color(255, 255, 80));
-	palette2.push_back(sf::Color(255, 255, 90));
-	palette2.push_back(sf::Color(255, 255, 100));
-	palette2.push_back(sf::Color(255, 255, 110));
-	palette2.push_back(sf::Color(255, 255, 120));
-	palette2.push_back(sf::Color(255, 255, 130));
-	palette2.push_back(sf::Color(255, 255, 145)); 	// White
-	palette2.push_back(sf::Color(255, 255, 130));
-	palette2.push_back(sf::Color(255, 255, 120));
-	palette2.push_back(sf::Color(255, 255, 110));
-	palette2.push_back(sf::Color(255, 255, 100));
-	palette2.push_back(sf::Color(255, 255, 90));
-	palette2.push_back(sf::Color(255, 255, 80));
-	palette2.push_back(sf::Color(255, 255, 70));
-	palette2.push_back(sf::Color(255, 255, 60));
-	palette2.push_back(sf::Color(255, 255, 50));
-	palette2.push_back(sf::Color(255, 255, 40));
+	palette2.push_back(sf::Color(255, 255, 50)); 	// White
 	palette2.push_back(sf::Color(255, 255, 30));
-	palette2.push_back(sf::Color(255, 255, 20));	 // Yellow
+	palette2.push_back(sf::Color(255, 255, 20));
+	palette2.push_back(sf::Color(255, 255, 10));	 // Yellow
 	palette2.push_back(sf::Color(255, 220, 0));
 	palette2.push_back(sf::Color(255, 200, 0));
 	palette2.push_back(sf::Color(255, 180, 0));

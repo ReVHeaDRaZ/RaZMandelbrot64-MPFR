@@ -39,6 +39,7 @@ int mpfrPrecision = 80;			// MPFR bits of mantissa precision
 bool zoomIn = false;
 bool zoomOut = false;
 bool autoZoomIn = false;
+bool lockOffsetY = false;
 int maxiterations = 128;
 bool autoIterations = false;		// Auto increment iterations during zoom
 bool canCalculateFractal = true;	// For only calculating Fractal after a zoom or pan
@@ -280,7 +281,7 @@ void CalculateFractal(uint start, uint end)
 						vertexarrayPoints[x + y * WIN_WIDTH].color = sf::Color(rgb.r, rgb.g, rgb.b, 255);
 						break;
 					case 4: // Palette 2 Fire
-						vertexarrayPoints[x + y * WIN_WIDTH].color = palette2[(int)(brightness + colortime) % 69];
+						vertexarrayPoints[x + y * WIN_WIDTH].color = palette2[(int)(brightness + colortime) % 52];
 						break;
 					case 5: // From Image
 						vertexarrayPoints[x + y * WIN_WIDTH].color = image.getPixel((unsigned int)(z.real()*10)%image.getSize().x, (unsigned int)(z.imag()*10)%image.getSize().y);
@@ -494,7 +495,7 @@ void CalculateFractalMPFR(uint start, uint end)
 						vertexarrayPoints[x + y * WIN_WIDTH].color = sf::Color(rgb.r, rgb.g, rgb.b, 255);
 						break;
 					case 4: // Palette 2 Fire
-						vertexarrayPoints[x + y * WIN_WIDTH].color = palette2[(int)(brightness + colortime) % 69];
+						vertexarrayPoints[x + y * WIN_WIDTH].color = palette2[(int)(brightness + colortime) % 52];
 						break;
 					//case 5: // From Image
 					//	vertexarrayPoints[x + y * WIN_WIDTH].color = image.getPixel((unsigned int)(z.real()*10)%image.getSize().x, (unsigned int)(z.imag()*10)%image.getSize().y);
@@ -586,6 +587,7 @@ void ZoomIn(sf::Window& window)
 		mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
 		double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
 		double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;
+		if(lockOffsetY) mouseY_D = 0.0;
 		offsetX = offsetX + mouseX_D;
 		mpfr_add_d(offsetX_T, offsetX_T, mouseX_D, GMP_RNDN);
 		offsetY = offsetY + mouseY_D;
@@ -619,6 +621,7 @@ void ZoomOut(sf::Window& window)
 	mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
 	double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
 	double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;
+	if(lockOffsetY) mouseY_D = 0.0;
 	offsetX = offsetX + mouseX_D;
 	mpfr_add_d(offsetX_T, offsetX_T, mouseX_D, GMP_RNDN);
 	offsetY = offsetY + mouseY_D;
