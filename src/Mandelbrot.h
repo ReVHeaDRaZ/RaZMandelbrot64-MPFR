@@ -609,7 +609,7 @@ void ZoomIn(sf::Window& window)
 	if(!autoZoomIn){
 		mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
 		double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
-		double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;
+		double mouseY_D = ((double)mousePos.y - (WIN_HEIGHT / 2.0)) * 0.1;
 		if(lockOffsetY) mouseY_D = 0.0;
 		offsetX = offsetX + mouseX_D;
 		mpfr_add_d(offsetX_T, offsetX_T, mouseX_D, GMP_RNDN);
@@ -647,7 +647,7 @@ void ZoomOut(sf::Window& window)
 	}
 	mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
 	double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
-	double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;
+	double mouseY_D = ((double)mousePos.y - (WIN_HEIGHT / 2.0)) * 0.1;
 	if(lockOffsetY) mouseY_D = 0.0;
 	offsetX = offsetX + mouseX_D;
 	mpfr_add_d(offsetX_T, offsetX_T, mouseX_D, GMP_RNDN);
