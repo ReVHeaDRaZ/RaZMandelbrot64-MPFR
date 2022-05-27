@@ -288,23 +288,26 @@ int main(int argc, char* argv[])
 			// Mouse Pressed
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				if (event.mouseButton.button == sf::Mouse::Button::Left)
+				if (event.mouseButton.button == sf::Mouse::Button::Left){
 					if(!autoZoomIn)
 						zoomIn = true;
-				if (event.mouseButton.button == sf::Mouse::Button::Right)
+				}
+				if (event.mouseButton.button == sf::Mouse::Button::Right){
 					if(!autoZoomIn)
 						zoomOut = true;
-				if (event.mouseButton.button == sf::Mouse::Button::Middle) // Reset View
-				{
+				}
+				if (event.mouseButton.button == sf::Mouse::Button::Middle){
 					ResetView();
 				}
 			}
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
 				if (event.mouseButton.button == sf::Mouse::Button::Left)
-					zoomIn = false;
+					if(!autoZoomIn)
+						zoomIn = false;
 				if (event.mouseButton.button == sf::Mouse::Button::Right)
-					zoomOut = false;
+					if(!autoZoomIn)
+						zoomOut = false;
 			}
 		}
 
