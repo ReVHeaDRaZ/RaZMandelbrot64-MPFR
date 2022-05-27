@@ -1,6 +1,7 @@
 uint WIN_WIDTH = 800; // Window Resolution
 uint WIN_HEIGHT = 600;
 uint MAX_NUM_PARTICLES = (WIN_WIDTH * WIN_HEIGHT);
+bool fullScreen = true;
 
 #include "Hud.h"
 #include "Mandelbrot.h"
@@ -10,6 +11,7 @@ static void show_usage(std::string name)
 	std::cout << "Usage: " << name << " <option(s)> "
 			  << "Options:\n"
 			  << "\t-h\t\tShow this help message\n"
+			  << "\t-w\t\tRun in a Window\n"
 			  << "\t-r Resolution WIDTH HEIGHT\t"
 			  << std::endl;
 }
@@ -42,6 +44,8 @@ int main(int argc, char* argv[])
 				show_usage(argv[0]);
 				return 0;
 			}
+			else if (arg == "-w")
+				fullScreen = false;
 			else if (arg == "-r")
 			{
 				if (i + 2 < argc)
@@ -63,7 +67,13 @@ int main(int argc, char* argv[])
 	}
 
 	// Create a non resizable window
-	sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "RaZ Mandelbrot", sf::Style::Fullscreen); //sf::Style::Titlebar | sf::Style::Close);
+	sf::Uint32 windowStyle;
+	if(fullScreen)
+		windowStyle = sf::Style::Fullscreen;
+	else
+		windowStyle = sf::Style::Titlebar;
+
+	sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "RaZ Mandelbrot", windowStyle); //sf::Style::Titlebar | sf::Style::Close);
 	window.setFramerateLimit(60);
 
 	// Create Texture for screenshots
@@ -166,6 +176,8 @@ int main(int argc, char* argv[])
 					interiorColor = sf::Color(brgb.r, brgb.g, brgb.b, 255);
 					canCalculateFractal = true;
 				}
+				if (event.key.code == sf::Keyboard::Key::Slash)
+					showInteriorDetect = !showInteriorDetect;
 				if (event.key.code == sf::Keyboard::Key::S)
 					takeScreenshot = true;
 				if (event.key.code == sf::Keyboard::Key::V)
@@ -262,15 +274,10 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::Key::F4)
 					lockOffsetY = !lockOffsetY;
 				if (event.key.code == sf::Keyboard::Key::F11){
-					mpfrPrecision = mpfrPrecision - 16;
-					if(mpfrPrecision < 80) mpfrPrecision = 80;
-					SetMPFRPrecision();
-					hudMpfr.setString(to_string(mpfrPrecision));
+					DecrementMPFRPrecision();
 				}
 				if (event.key.code == sf::Keyboard::Key::F12){
-					mpfrPrecision = mpfrPrecision + 16;
-					SetMPFRPrecision();
-					hudMpfr.setString(to_string(mpfrPrecision));
+					IncrementMPFRPrecision();
 				}
 				if (event.key.code == sf::Keyboard::Key::F5){
 					fractalType++;
@@ -304,14 +311,14 @@ int main(int argc, char* argv[])
 		if (zoomIn && !zoomOut){
 			ZoomIn(window);
 			if(autoIterations){
-				maxiterations+=4;
+				maxiterations+=6;
 				currentIterations.setString(to_string(maxiterations));
 			}
 		}
 		if (zoomOut && !zoomIn){
 			ZoomOut(window);
 			if(autoIterations){
-				maxiterations-=4;
+				maxiterations-=6;
 				if(maxiterations<8) maxiterations=8;
 				currentIterations.setString(to_string(maxiterations));
 			}

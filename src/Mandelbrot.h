@@ -15,6 +15,7 @@ sf::Color interiorColor = sf::Color::Black; // Used for interior Coloring of man
 unsigned char interiorHue = 0;
 HsvColor bhsv = { 255, 255, 100 };
 RgbColor brgb;
+bool showInteriorDetect = true;
 
 sf::Clock colortimer;	// Use a timer for animated color method
 bool animated = false;
@@ -31,6 +32,7 @@ double zmx2 = 2;
 double zmy1 = WIN_HEIGHT / 4;
 double zmy2 = 2;
 double zmAmount = 1.1;
+int zoomCount = 0;				// To auto set MPFR Precision on zoom
 
 mpfr_t offsetX_T,offsetY_T,zmx1_T,zmx2_T,zmy1_T,zmy2_T, zmAmount_T, bail_T, t1_T; // MPFR copies of Pan and Zoom variables
 bool useMPFR = false;			// To turn MPFR on/off
@@ -65,6 +67,8 @@ int fractalType = MANDELBROT;
 void InitVertexArray();
 void InitMPFR();
 void SetMPFRPrecision();
+void IncrementMPFRPrecision();
+void DecrementMPFRPrecision();
 void CalculateFractal(uint start, uint end);
 void CalculateFractalMPFR(uint start, uint end);
 void CreateFractalThreads();
@@ -154,6 +158,17 @@ void SetMPFRPrecision(){
 	mpfr_set(bail_T, temp, GMP_RNDN);
 
 	mpfr_clear(temp);
+
+	hudMpfr.setString(to_string(mpfrPrecision));
+}
+void IncrementMPFRPrecision(){
+	mpfrPrecision += 16;
+	SetMPFRPrecision();
+}
+void DecrementMPFRPrecision(){
+	mpfrPrecision -= 16;
+	if(mpfrPrecision < 80) mpfrPrecision = 80;
+	SetMPFRPrecision();
 }
 
 void MandelbrotFractal(double& a, double& b, double ca, double cb){
@@ -244,7 +259,7 @@ void CalculateFractal(uint start, uint end)
 			// If we never got there, pick the interiorColor
 			if (n == maxiterations)
 			{
-				if(inside)
+				if(inside && showInteriorDetect)
 					vertexarrayPoints[x + y * WIN_WIDTH].color = sf::Color(interiorColor.r*0.5,interiorColor.g*0.5,interiorColor.b*0.5,255);
 				else
 				vertexarrayPoints[x + y * WIN_WIDTH].color = interiorColor;
@@ -569,6 +584,10 @@ void ResetView()
 	maxiterations=256;
 	currentIterations.setString(to_string(maxiterations));
 
+	zoomCount = 0;
+	mpfrPrecision = 80;
+	SetMPFRPrecision();
+
 	mpfr_set_d(offsetX_T, offsetX, GMP_RNDN);
 	mpfr_set_d(offsetY_T, offsetY, GMP_RNDN);
 	mpfr_set_d(zmx1_T, zmx1, GMP_RNDN);
@@ -583,6 +602,10 @@ void ResetView()
 
 void ZoomIn(sf::Window& window)
 {
+	zoomCount++;
+	if(zoomCount == 525 || zoomCount == 625 || zoomCount == 725){
+		IncrementMPFRPrecision();
+	}
 	if(!autoZoomIn){
 		mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
 		double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
@@ -618,6 +641,10 @@ void ZoomIn(sf::Window& window)
 
 void ZoomOut(sf::Window& window)
 {
+	zoomCount--;
+	if(zoomCount == 524 || zoomCount == 624 || zoomCount == 724){
+		DecrementMPFRPrecision();
+	}
 	mousePos = sf::Mouse::getPosition(window); // Get Mouse pos
 	double mouseX_D = ((double)mousePos.x - (WIN_WIDTH / 2.0)) * 0.1;
 	double mouseY_D = ((double)mousePos.y - (WIN_WIDTH / 2.0)) * 0.1;

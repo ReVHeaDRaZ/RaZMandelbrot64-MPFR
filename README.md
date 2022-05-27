@@ -17,6 +17,7 @@ This is the same as RaZMandelbrot but 64bit and MPFR implemented for deep zooms
 | <b>G and H-</b> | Change Single Color Green Amount -/+ |
 | <b>B and N-</b> | Change Single Color Blue Amount -/+ |
 | <b>< and >-</b> | Change Mandelbrot Interior Hue -/+ |
+| <b>?-</b> | Show Interior Detection |
 | <b>A-</b> | Animate Color Method |
 | <b>X-</b> | Normal Map ON/OFF |
 | <b>HOME and END-</b> | Change Light Height UP/DOWN (NormalMap)|
@@ -31,3 +32,7 @@ This is the same as RaZMandelbrot but 64bit and MPFR implemented for deep zooms
 | <b>F5-</b> | Change Fractal (Burning Ship) |
 | <b>F11 and F12-</b> | Change MPFR Precision -/+ |
 | <b>I-</b> | Show Controls |
+
+# Command Line Options
+Resolution		-r WIDTH HEIGHT
+Windowed		-w

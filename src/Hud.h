@@ -52,9 +52,9 @@ void InitHud()
 	instructions1.setPosition(WIN_WIDTH/2,0);
 	instructions2.setPosition((WIN_WIDTH/2)+150,0);
 	instructions1.setString(
-	"SET RGB VALUES FOR SINGLE COLOR METHOD\nR and T-\nG and H-\nB and N-\n\nC-\nA- \n\nX- \nHOME and END- \nINS and DEL- \n\n, and .-\nPAGEUP and PAGEDOWN-\nARROW KEYS-\nLMB and RMB-\nMMB-\nS-\nV-\nF1-\nF2-\nF3-\nF4- \nTILDE-\nF11 and F12-");
+	"SET RGB VALUES FOR SINGLE COLOR METHOD\nR and T-\nG and H-\nB and N-\n\nC-\nA- \n\nX- \nHOME and END- \nINS and DEL- \n\n, and .-\nPAGEUP and PAGEDOWN-\nARROW KEYS-\nLMB and RMB-\nMMB-\nS-\nV-\nF1-\nF2-\nF3-\nF4- \nF5- \nTILDE-\nF11 and F12-");
 	instructions2.setString(
-	"\nRED\nGREEN\nBLUE\n\nCHANGE COLOR METHOD\nANIMATE COLOR\n\nNORMAL MAP\nLIGHT HEIGHT\nLIGHT ANGLE\n\nINTERIOR COLOR\nITERATIONS\nPAN\nZOOM\nRESET VIEW\nTAKE SCREENSHOT\nTAKE VIDEO FRAMES\nAUTOZOOM\nAUTO ITERATIONS\nRESET Y OFFSET\nLOCK Y OFFSET\nMPFR ON/OFF\nMPFR PRECISION");
+	"\nRED\nGREEN\nBLUE\n\nCHANGE COLOR METHOD\nANIMATE COLOR\n\nNORMAL MAP\nLIGHT HEIGHT\nLIGHT ANGLE\n\nINTERIOR COLOR\nITERATIONS\nPAN\nZOOM\nRESET VIEW\nTAKE SCREENSHOT\nTAKE VIDEO FRAMES\nAUTOZOOM\nAUTO ITERATIONS\nRESET Y OFFSET\nLOCK Y OFFSET\nCHANGE FRACTAL\nMPFR ON/OFF\nMPFR PRECISION");
 	//load the font
 	//note that this path is relative to the workspace
 	if (!font.loadFromFile("content/shredded.ttf"))
